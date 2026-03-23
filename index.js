@@ -14,6 +14,7 @@ app.get('/api/info', (req, res) => {
     });
 });
 
+// Banco de dados em memória (Array de filmes da aula)
 let filmes = [
     { id: 1, titulo: "Inception", diretor: "Christopher Nolan", ano: 2010, genero: "Sci-Fi", nota: 8.8 },
     { id: 2, titulo: "O Poderoso Chefão", diretor: "Francis Ford Coppola", ano: 1972, genero: "Crime", nota: 9.2 },
@@ -27,14 +28,22 @@ let filmes = [
     { id: 10, titulo: "Clube da Luta", diretor: "David Fincher", ano: 1999, genero: "Drama", nota: 8.8 }
 ];
 
+// Variável para controlar o próximo ID (Tinha esquecido de declarar!)
+let proximoId = 11;
+
+// GET /api/filmes - Listagem com filtros, ordem e paginação
 app.get('/api/filmes', (req, res) => {
+    // Pegando os parâmetros da URL
     const { genero, ordem, pagina = 1, limite = 5 } = req.query;
     let resultado = [...filmes];
 
+    // Lógica de filtro por gênero
     if (genero) resultado = resultado.filter(f => f.genero.toLowerCase() === genero.toLowerCase());
+
+    // Lógica de ordenação por nota
     if (ordem === 'nota') resultado.sort((a, b) => b.nota - a.nota);
 
-    // Cálculos de paginação
+    // Cálculos de paginação que o professor passou
     const paginaNum = parseInt(pagina);
     const limiteNum = parseInt(limite);
     const inicio = (paginaNum - 1) * limiteNum;
@@ -47,6 +56,18 @@ app.get('/api/filmes', (req, res) => {
     });
 });
 
+// GET por ID - Adicionei para ficar completo
+app.get('/api/filmes/:id', (req, res) => {
+    const idParam = parseInt(req.params.id);
+    const filme = filmes.find(f => f.id === idParam);
+
+    if (!filme) {
+        return res.status(404).json({ erro: "Filme não encontrado no sistema" });
+    }
+    res.json(filme);
+});
+
+// POST /api/filmes - Criar novo filme
 app.post('/api/filmes', (req, res) => {
     const { titulo, diretor, ano, genero, nota } = req.body;
 
@@ -55,22 +76,25 @@ app.post('/api/filmes', (req, res) => {
         return res.status(400).json({ erro: "Campos obrigatorios faltando" });
     }
 
-    // 2. Validação de Nota (0 a 10)
+    // 2. Validação de Nota (0 a 10) - Não pode ser string nem fora do limite
     if (typeof nota !== 'number' || nota < 0 || nota > 10) {
         return res.status(400).json({ erro: "A nota deve ser entre 0 e 10" });
     }
 
-    // 3. Validação de Ano (Regra de negócio)
+    // 3. Validação de Ano (Regra de negócio: cinema nasceu em 1895)
     if (ano < 1895 || ano > 2026) {
         return res.status(400).json({ erro: "Ano de lancamento invalido" });
     }
 
+    // Criando o objeto com ID automático
     const novoFilme = { id: proximoId++, titulo, diretor, ano, genero, nota };
     filmes.push(novoFilme);
 
+    // Status 201 indica que algo foi criado com sucesso
     res.status(201).json(novoFilme);
 });
 
+// Iniciando o servidor na porta 3000
 app.listen(PORT, () => {
     console.log(`🚀 Servidor rodando em http://localhost:${PORT}`);
 });
