@@ -34,7 +34,7 @@ app.get('/api/filmes', (req, res) => {
     if (genero) resultado = resultado.filter(f => f.genero.toLowerCase() === genero.toLowerCase());
     if (ordem === 'nota') resultado.sort((a, b) => b.nota - a.nota);
 
-    // Cálculos de paginação (Aula 2)
+    // Cálculos de paginação
     const paginaNum = parseInt(pagina);
     const limiteNum = parseInt(limite);
     const inicio = (paginaNum - 1) * limiteNum;
@@ -47,6 +47,29 @@ app.get('/api/filmes', (req, res) => {
     });
 });
 
+app.post('/api/filmes', (req, res) => {
+    const { titulo, diretor, ano, genero, nota } = req.body;
+
+    // 1. Campos obrigatórios
+    if (!titulo || !diretor || !ano || !genero || !nota) {
+        return res.status(400).json({ erro: "Campos obrigatorios faltando" });
+    }
+
+    // 2. Validação de Nota (0 a 10)
+    if (typeof nota !== 'number' || nota < 0 || nota > 10) {
+        return res.status(400).json({ erro: "A nota deve ser entre 0 e 10" });
+    }
+
+    // 3. Validação de Ano (Regra de negócio)
+    if (ano < 1895 || ano > 2026) {
+        return res.status(400).json({ erro: "Ano de lancamento invalido" });
+    }
+
+    const novoFilme = { id: proximoId++, titulo, diretor, ano, genero, nota };
+    filmes.push(novoFilme);
+
+    res.status(201).json(novoFilme);
+});
 
 app.listen(PORT, () => {
     console.log(`🚀 Servidor rodando em http://localhost:${PORT}`);
