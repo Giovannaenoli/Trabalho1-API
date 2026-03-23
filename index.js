@@ -36,6 +36,18 @@ app.get('/api/filmes', (req, res) => {
     res.json(filmes);
 });
 
+// GET por ID
+app.get('/api/filmes/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const filme = filmes.find(f => f.id === id);
+
+    if (!filme) {
+        return res.status(404).json({ erro: "Filme não encontrado" });
+    }
+    res.json(filme);
+});
+
+
 app.listen(PORT, () => {
     console.log(`🚀 Servidor rodando em http://localhost:${PORT}`);
 });
