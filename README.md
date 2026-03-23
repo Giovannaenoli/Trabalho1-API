@@ -51,7 +51,15 @@ Endpoint: POST /api/filmes
 
 Status: 201 Created
 
-<img width="1522" height="1121" alt="Captura de tela 2026-03-23 201134" src="https://github.com/user-attachments/assets/2ea7943d-b45d-4d31-a98d-e311d3112b77" />
+Filme 1: <img width="1522" height="1121" alt="Captura de tela 2026-03-23 201134" src="https://github.com/user-attachments/assets/2ea7943d-b45d-4d31-a98d-e311d3112b77" />
+
+Filme 2: <img width="1509" height="1088" alt="Captura de tela 2026-03-23 203319" src="https://github.com/user-attachments/assets/7a5a0ab7-dcf8-4c01-8f78-34289c63267a" />
+
+Filme 3: <img width="1518" height="1190" alt="Captura de tela 2026-03-23 203352" src="https://github.com/user-attachments/assets/0066172a-cda0-4b74-b069-ffc948427ffa" />
+
+Filme 4: <img width="1518" height="1171" alt="Captura de tela 2026-03-23 203425" src="https://github.com/user-attachments/assets/859ff08f-5ae1-4027-b32c-c5951ab1f864" />
+
+Filme 5: <img width="1522" height="1131" alt="Captura de tela 2026-03-23 203457" src="https://github.com/user-attachments/assets/ebb37a65-4a21-4478-974f-aa74215d16f2" />
 
 4. Validações e Tratamento de Erro (POST)
 A API possui camadas de proteção para garantir que nenhum dado inválido seja inserido. No exemplo abaixo, tentamos enviar uma nota maior que 10.
@@ -59,7 +67,6 @@ A API possui camadas de proteção para garantir que nenhum dado inválido seja 
 Status: 400 Bad Request
 
 <img width="1524" height="1167" alt="Captura de tela 2026-03-23 201144" src="https://github.com/user-attachments/assets/ff6306aa-246b-4aed-b89d-71e1a4227683" />
-
 
 **Regras de Negócio e Validações**
 Seguindo as orientações de "Valide SEMPRE" passadas em aula, implementei:
