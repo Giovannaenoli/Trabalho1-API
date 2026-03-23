@@ -1,0 +1,85 @@
+{
+  "info": {
+    "_postman_id": "a8bf9f25-f24e-481d-bae1-1eeda18357c3",
+    "name": "Trabalho 1 - API Giovanna",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "53429505",
+    "_collection_link": "https://go.postman.co/collection/53429505-a8bf9f25-f24e-481d-bae1-1eeda18357c3?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "GET",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "POST",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/filmes",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "filmes"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST ERROR",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"titulo\": \"Duna: Parte 2\",\r\n  \"diretor\": \"Denis Villeneuve\",\r\n  \"ano\": 2024,\r\n  \"genero\": \"Sci-Fi\",\r\n  \"nota\": 15.0\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/filmes",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "filmes"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET - BUSCAR POR ID",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    }
+  ]
+}
