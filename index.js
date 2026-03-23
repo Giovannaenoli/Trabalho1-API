@@ -28,20 +28,23 @@ let filmes = [
 ];
 
 app.get('/api/filmes', (req, res) => {
-    const { genero, ordem } = req.query;
+    const { genero, ordem, pagina = 1, limite = 5 } = req.query;
     let resultado = [...filmes];
 
-    // Filtro por categoria
-    if (genero) {
-        resultado = resultado.filter(f => f.genero.toLowerCase() === genero.toLowerCase());
-    }
+    if (genero) resultado = resultado.filter(f => f.genero.toLowerCase() === genero.toLowerCase());
+    if (ordem === 'nota') resultado.sort((a, b) => b.nota - a.nota);
 
-    // Ordenação
-    if (ordem === 'nota') {
-        resultado.sort((a, b) => b.nota - a.nota);
-    }
+    // Cálculos de paginação (Aula 2)
+    const paginaNum = parseInt(pagina);
+    const limiteNum = parseInt(limite);
+    const inicio = (paginaNum - 1) * limiteNum;
+    const final = inicio + limiteNum;
 
-    res.json(resultado);
+    res.json({
+        dados: resultado.slice(inicio, final),
+        total_itens: resultado.length,
+        pagina_atual: paginaNum
+    });
 });
 
 
