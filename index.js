@@ -27,24 +27,21 @@ let filmes = [
     { id: 10, titulo: "Clube da Luta", diretor: "David Fincher", ano: 1999, genero: "Drama", nota: 8.8 }
 ];
 
-app.get('/api/info', (req, res) => {
-    res.json({ nome: 'API de Catálogo de Filmes', versao: '1.0.0', autor: 'Giovanna Oliveira' });
-});
-
-// GET simples para listar todos
 app.get('/api/filmes', (req, res) => {
-    res.json(filmes);
-});
+    const { genero, ordem } = req.query;
+    let resultado = [...filmes];
 
-// GET por ID
-app.get('/api/filmes/:id', (req, res) => {
-    const id = parseInt(req.params.id);
-    const filme = filmes.find(f => f.id === id);
-
-    if (!filme) {
-        return res.status(404).json({ erro: "Filme não encontrado" });
+    // Filtro por categoria
+    if (genero) {
+        resultado = resultado.filter(f => f.genero.toLowerCase() === genero.toLowerCase());
     }
-    res.json(filme);
+
+    // Ordenação
+    if (ordem === 'nota') {
+        resultado.sort((a, b) => b.nota - a.nota);
+    }
+
+    res.json(resultado);
 });
 
 
